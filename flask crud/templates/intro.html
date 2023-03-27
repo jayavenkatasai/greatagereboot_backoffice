@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAR</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link href="./assets/css/global.css" rel="stylesheet">
+    
+  <style>
+    html, body {
+        margin:0;
+        height:100%;
+    }
+    .module {
+        width:100%;
+        height:100%;
+    }
+    #list{
+        width:300px;
+        padding:10px;
+        font-size:20px;
+        text-align: center;
+        border-radius: 0;
+        Border: 1px solid grey;
+        outline: none;
+        
+    }
+    .submit-btn {
+        font-size: 20px;
+        border-radius: 25px;
+        /* background-color: black; */
+        background-color: #0096ff;
+        padding: 10px 50px;
+        border: none;
+        outline: none;
+        color:#fff;
+}
+    .submit-btn:hover {
+        color:#fff;
+        background-color: #0096ff;
+    }
+    .module {
+    background:  linear-gradient(180deg, rgba(0, 150, 255, 0.61) 0%, rgba(0, 10, 117, 0.61) 100%),url(/static/signinbg.png);
+    background-repeat: no-repeat;
+    padding: 60px 0;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.module .module-wrapper-sec{
+    background-color: #fff;
+    position: relative;
+    color: #1F0382;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 60px;
+
+ }
+ .logo-area{
+    margin: 0 0 30px 0;
+ }
+ .main-head h1 {
+    font-size:30px;
+ }
+ .main-head h3 {
+    font-size:22px;
+ }
+ @media only screen and (max-width:767px){
+   .module .module-wrapper-sec{
+      max-width: none;
+      border-radius: 0px;
+      width: 100%;
+      padding: 30px;
+   }
+   .form-text {
+      margin: 0 0 28px 0;
+    }
+    .module {
+      display: block;
+    }
+    .form-box {
+        padding:5%;
+    }
+
+  }
+  .dropbtn {
+  background-color: #201782;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 300px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #201782;
+}
+
+
+  </style>
+  </head>
+<body>
+    <div class="module">
+        <div class="module-wrapper ">
+            <div class="form-box">
+                <div class="module-wrapper-sec">
+                    <div class="logo-area">
+                        <img src="/static/GARlogo.png" alt="logo-area">
+                    </div>
+
+                    <div class="main-head mt-2 "><h1 class="text-center">Module Name</h1>
+                        <h3 class="text-center" >Select Your Table Below</h3>
+                    </div>
+                    <div class="dropdown">
+  <button class="dropbtn">SELECT</button>
+  <div class="dropdown-content">
+    <a href="{{url_for('Index')}}">Activity-table<ul><li>You can add lessons</li></ul></a>
+    <a href="{{url_for('Second')}}">Questionniare-table</a>
+    <a href="{{url_for('Third')}}">Questionary-answer-table</a>
+  </div>
+</div>
+                   
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function goToNewPage()
+        {
+            var url = document.getElementById('list').value;
+            if(url != 'none') {
+                window.location = url;
+            }
+        }
+    </script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

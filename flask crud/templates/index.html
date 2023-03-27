@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechSky</title>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background: linear-gradient(
+            180deg,
+            rgba(0, 150, 255, 0.61) 0%,
+            rgba(0, 10, 117, 0.61) 100%
+          ),
+          url(/static/lotusbg.png);
+        background-repeat: no-repeat;
+        padding: 60px 0;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+      }
+      td {
+        color: white;
+      }
+      .tr-1 > td {
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- The Main Heading Gioes Here -->
+    <div class="container-fluid">
+      <h1 class="text-center alert alert-danger">Questionary TABLE</h1>
+      <div class="row">
+        <div class="col-sm-2"></div>
+<!--  here onwards the sub-head and the to add activity button will be produced -->
+        <!-- content goes here -->
+        <div class="col-sm-8">
+          <h2>
+            Questionary List
+            <button
+              class="btn btn-primary float-right"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              Add Question
+            </button>
+          </h2>
+        <!--  Here the searc h entry box will arises-->
+          <!-- chatgpt query -->
+          <form action="{{ url_for('Index') }}" method="get">
+            <input
+              type="text"     
+              name="search_query"
+              value="{{ search_query }}"
+              placeholder="Search..."
+            />
+            <!-- In above the type is about the field and name is used to acces the database frontend value is the user given vales -->
+            <button type="submit">Search</button> 
+            <!-- The above button sends the data to  forms -->
+          </form>
+          <!-- chatgpt query -->
+
+          {%with messages = get_flashed_messages()%} {%if messages%} {% for
+          message in messages %}
+          <!-- here if there are any flash messages it i9s telling to execute in this place -->
+          <div class="alert alert-success alert-dismissable" role="alert">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{message}}
+          </div>
+          <!-- here for flash messages the styyle is formed -->
+          {%endfor%} {%endif%} {%endwith%} {% if students %}
+          <!-- chatgpt code -->
+          <!-- here we create the table for it -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">title</th>
+                <th scope="col">Module</th>
+                <th scope="col">order</th>
+                <th scope="col">Location</th>
+                <th scope="col">Primary_Icon</th>
+                <th scope="col">Caption</th>
+                <th scope="col">Action-type</th>
+                <th scope="col">Question_ID</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in students %}
+              <!-- here we are running for loop for the results and here we are getting the results and stored in the array format -->
+              <tr>
+                <td>{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                 <td>{{row.4}}</td>
+                 <td>{{row.5}}</td>
+                 <td>{{row.6}}</td>
+                 <td>{{row.7}}</td>
+                 <td>{{row.8}}</td>
+                
+                <td>
+                    <a href="/update/{{row.0}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+                    <a href="/delete/{{ row.0 }}" onclick="return confirm('Are Sure Want To Deleted ?')" class="btn btn-danger btn-sm">Delete</a>
+            
+                </td>
+               </tr>
+              {% endfor %}
+              <!-- here we ended the for loop -->
+            </tbody>
+          </table>
+
+          {% else %}
+          <p>No results found.</p>
+          {% endif %}
+          <!-- chatgpt code ends here -->
+
+          <!-- Enter New Student Modal -->
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5
+                    class="modal-title text-primary"
+                    style="align-content: center"
+                  >
+                    Please Add New Question
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body">
+                  <form action="{{ url_for('insert')}}" method="POST">
+                    <div class="form-group">
+                      <label>Title</label>
+                      <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Enter Full Name"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label>Module</label>
+                      <input
+                        type="text"
+                        name="module"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Enter Email"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label>order</label>
+                      <input
+                        name="order"
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Enter Phone Number"
+                      />
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input
+                          name="location"
+                          type="text"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Phone Number"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Primary_Icon</label>
+                        <input
+                          name="primary_icon"
+                          type="text"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Phone Number"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Caption</label>
+                        <input
+                          name="caption"
+                          type="text"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Phone Number"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Action_type</label>
+                        <input
+                          name="action_type"
+                          type="text"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Phone Number"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Question_ID</label>
+                        <input
+                          name="question_id"
+                          type="text"
+                          class="form-control"
+                          id="exampleFormControlInput1"
+                          placeholder="Enter Phone Number"
+                        />
+                      </div>
+
+                    <button type="submit" class="btn btn-primary mb-2">
+                      Save
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- End of Enter New Student Modal -->
+<!-- 
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">S/N</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in students %}
+              <tr class="tr-1">
+                <td>{{row.0}}</td>
+                <td>{{row.1}}</td>
+                <td>{{row.2}}</td>
+                <td>{{row.3}}</td>
+                <td>
+                  <a
+                    href="/update/{{row.0}}"
+                    class="btn btn-warning btn-sm"
+                    data-toggle="modal"
+                    data-target="#modaledit{{row.0}}"
+                    >Edit</a
+                  >
+                  <a
+                    href="/delete/{{ row.0 }}"
+                    onclick="return confirm('Are Sure Want To Deleted ?')"
+                    class="btn btn-danger btn-sm"
+                    >Delete</a
+                  >
+                </td>
+              </tr> -->
+
+              <!-- Enter New Student Modal -->
+              <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title text-primary"
+                        style="align-content: center"
+                      >
+                        Update Student Details
+                      </h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+
+                    <div class="modal-body">
+                      <form action="{{ url_for('update')}}" method="POST">
+                        <input type="hidden" name="id" value="{{row.0}}" />
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input
+                              value="{{row.0}}"
+                              type="text"
+                              name="id"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Full Name"
+                            disabled/>
+                          </div>
+                        <div class="form-group">
+                          <label>Title</label>
+                          <input
+                            value="{{row.1}}"
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Enter Full Name"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label>Module</label>
+                          <input
+                            value="{{row.2}}"
+                            type="text"
+                            name="module"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Enter Email"
+                          />
+                        </div>
+
+                        <div class="form-group">
+                          <label>order</label>
+                          <input
+                            value="{{row.3}}"
+                            name="order"
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Enter Phone Number"
+                          />
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input
+                              value="{{row.4}}"
+                              name="location"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Primary_icon</label>
+                            <input
+                              value="{{row.5}}"
+                              name="primary_icon"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Caption</label>
+                            <input
+                              value="{{row.6}}"
+                              name="caption"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Actin_type</label>
+                            <input
+                              value="{{row.7}}"
+                              name="action_type"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Question_ID</label>
+                            <input
+                              value="{{row.8}}"
+                              name="question_id"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div>
+                          <!-- <div class="form-group">
+                            <label>Content_type</label>
+                            <input
+                              value="{{row.9}}"
+                              name="content_type"
+                              type="text"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="Enter Phone Number"
+                            />
+                          </div> -->
+
+                        <button type="submit" class="btn btn-success mb-2">
+                          Update
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- End of Edit Student Modal -->
+<!-- 
+              {% endfor %}
+            </tbody>
+          </table>
+        </div> -->
+        <!-- Content ends here-->
+
+        <div class="col-sm-2"></div>
+      </div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
